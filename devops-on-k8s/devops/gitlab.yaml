@@ -30,27 +30,27 @@ spec:
             - containerPort: 22
               name: agent
               protocol: TCP
-          resources:
-            limits:
-              cpu: 2000m
-              memory: 8Gi
-            requests:
-              cpu: 500m
-              memory: 512Mi
-          livenessProbe:
-            httpGet:
-              path: /users/sign_in
-              port: 30088
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            failureThreshold: 12
-          readinessProbe:
-            httpGet:
-              path: /users/sign_in
-              port: 30088
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            failureThreshold: 12
+          #resources:
+          #  limits:
+          #    cpu: 2000m
+          #    memory: 8Gi
+          #  requests:
+          #    cpu: 500m
+          #    memory: 512Mi
+          #livenessProbe:
+          #  httpGet:
+          #    path: /users/sign_in
+          #    port: 30088
+          #  initialDelaySeconds: 60
+          #  timeoutSeconds: 5
+          #  failureThreshold: 12
+          #readinessProbe:
+          #  httpGet:
+          #    path: /users/sign_in
+          #    port: 30088
+          #  initialDelaySeconds: 60
+          #  timeoutSeconds: 5
+          #  failureThreshold: 12
           volumeMounts:
             - name: gitlab-conf
               mountPath: /etc/gitlab
@@ -61,6 +61,8 @@ spec:
           env:
             - name: gitlab_HOME
               value: /var/lib/gitlab
+      nodeSelector:             # 节点标签选择器
+        devops: "true"
       volumes:
         - name: gitlab-conf
           hostPath: 
