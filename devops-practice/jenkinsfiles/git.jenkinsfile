@@ -1,0 +1,27 @@
+
+
+//pipeline
+pipeline{
+    agent { node { label "build"}}
+    
+    
+    stages{
+
+        stage("CheckOut"){
+            steps{
+                script{
+                   
+                    println("${branchName}")
+                
+                    checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], 
+                              doGenerateSubmoduleConfigurations: false, 
+                              extensions: [], 
+                              submoduleCfg: [], 
+                              userRemoteConfigs: [[credentialsId: 'gitlab-admin-user', 
+                              url: "${srcUrl}"]]])
+
+                }
+            }
+        }
+    }
+}
